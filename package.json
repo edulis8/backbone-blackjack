@@ -1,0 +1,19 @@
+{
+  "name": "blackjack",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "google-chrome SpecRunner.html",
+    "start": "google-chrome index.html && coffee --output compiled --map --watch --compile ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jsoo1/2016-01-blackjack.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jsoo1/2016-01-blackjack/issues"
+  }
+}

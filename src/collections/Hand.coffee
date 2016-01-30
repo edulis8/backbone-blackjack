@@ -1,31 +1,30 @@
 class window.Hand extends Backbone.Collection
   model: Card
-
-  #[] []
-
+  # a collection of card models [] [] [] with 'revealed', suitName, value etc
   initialize: (array, @deck, @isDealer) ->
 
 
   hit: ->
-    @add(@deck.pop())
+    if @scores()[0] < 21 or @scores()[1] < 21 then @add(@deck.pop())
+
+    if @scores()[0] > 21 then @bust()
+    # trigger(s) here for game ending
 
   stand: ->
-    console.log('stand')
     @trigger 'stand', @
 
-  dealerPlay: (playerScore) ->
-    # if scores[0] or scores[1] < 17
-    # hit
-    @at(0).flip()
-    console.log(@scores()[0], @scores()[1])
-    debugger;
-    if @scores()[0] or @scores()[1] < 17 then @hit()
+  bust: ->
+    @trigger 'bust', @
+
+  dealerPlay: () ->
+    if @at(0).get('revealed') != true then @at(0).flip()
+
+    while @scores()[0] < 17 and @scores()[1] < 17 then @hit()
 
   hasAce: -> @reduce (memo, card) ->
     memo or card.get('value') is 1
   , 0
   # adding up the scores on the revealed cards
-  # this.reduce
   minScore: -> @reduce (score, card) ->
     score + if card.get 'revealed' then card.get 'value' else 0
   , 0
@@ -35,8 +34,3 @@ class window.Hand extends Backbone.Collection
     # Usually, that array contains one element. That is the only score.
     # when there is an ace, it offers you two scores - the original score, and score + 10.
     [@minScore(), @minScore() + 10 * @hasAce()]
-
-      # 6 , ace
-      # 7 or 17
-
-

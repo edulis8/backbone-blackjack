@@ -8,9 +8,13 @@ class window.App extends Backbone.Model
     # generate a dealerHand using deck's method
     @set 'dealerHand', deck.dealDealer()
     # listener for stand
-    @get('playerHand').on 'stand', (score) => @get('dealerHand').dealerPlay(score)
-      # console.log('heard the stand trigger')
-      # @get('dealerHand').dealerPlay(score)
-      # return undefined
-    # this.on('stand', this.get('dealerHand').dealerPlay);
+    @get('playerHand').on 'stand', => @get('dealerHand').dealerPlay()
+    
+    @get('playerHand').on 'bust', => @trigger 'playerLoses', @
+    @get('dealerHand').on 'bust', => @trigger 'dealerLoses', @
 
+# this.get('dealerHand').on('bust', (function(_this) {
+#   return function(playerContext) {
+#     return _this.trigger('dealerLoses', _this);
+#   };
+# })(this));

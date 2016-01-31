@@ -1,3 +1,5 @@
+# NORMALLY THE APPVIEW WOULD INTERACTE DIRECTLY WITH ITS MODEL AND THE MODEL WOULD TRANSLATE INTENT TO SUBORDINATE MODELS, BUT HERE THAT IS BYPASSED AND WE GO TO HANDMODEL DIRECTLY FROM APPVIEW
+
 class window.AppView extends Backbone.View
   template: _.template '
     <button class="hit-button">Hit</button> <button class="stand-button">Stand</button>
@@ -11,6 +13,7 @@ class window.AppView extends Backbone.View
 
   initialize: ->
     # Listeners for triggers from the hands.
+    # SOLUTION: THIS IS IN APP, NOT HERE
     @model.get('playerHand').on 'bust', => 
       alert 'You busted!!!'
       @reset()      
@@ -20,6 +23,9 @@ class window.AppView extends Backbone.View
       @reset()
     
     @model.on 'game-over', @reset, @
+    # WHEN LISTENING TO MANY EVENTS: @model.on 'all', @reset, @
+    # AND PUT A PARAMETER IN RESET CALLED EVENT, MAKE CASES/IF STATEMENTS
+    # THAT CORRESPOND TO NAMES OF TRIGGERS
   
     # @model.get('playerHand').on 'stand', => 
     #   @model.get('dealerHand').dealerPlay()
@@ -28,9 +34,9 @@ class window.AppView extends Backbone.View
     @render()
 
   reset: ->
-    if confirm 'Want to play again?' then @model = new App(@model.get('deck'))
-    @initialize()
-    @render()
+      if confirm 'Want to play again?' then @model = new App(@model.get('deck'))
+      @initialize()
+      @render()
 
   render: ->
     @$el.children().detach()

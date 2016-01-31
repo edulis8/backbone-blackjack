@@ -10,8 +10,26 @@ class window.AppView extends Backbone.View
     'click .stand-button': -> @model.get('playerHand').stand()
 
   initialize: ->
-    @model.on 'playerLoses', -> alert "You lose!!!"
-    @model.on 'dealerLoses', -> alert "You Win!!!"
+    # Listeners for triggers from the hands.
+    @model.get('playerHand').on 'bust', => 
+      alert 'You busted!!!'
+      @reset()      
+
+    @model.get('dealerHand').on 'bust', => 
+      alert 'Dealer busted!!!'
+      @reset()
+    
+    @model.on 'game-over', @reset, @
+  
+    # @model.get('playerHand').on 'stand', => 
+    #   @model.get('dealerHand').dealerPlay()
+    #   @events['click .hit-button'] = -> alert('No.')
+  
+    @render()
+
+  reset: ->
+    if confirm 'Want to play again?' then @model = new App(@model.get('deck'))
+    @initialize()
     @render()
 
   render: ->

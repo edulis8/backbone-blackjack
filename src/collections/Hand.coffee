@@ -6,9 +6,8 @@ class window.Hand extends Backbone.Collection
 
   hit: ->
     if @scores()[0] < 21 or @scores()[1] < 21 then @add(@deck.pop())
-
+    # expectation: if score is 22 or over then bust 
     if @scores()[0] > 21 then @bust()
-    # trigger(s) here for game ending
 
   stand: ->
     @trigger 'stand', @
@@ -18,7 +17,6 @@ class window.Hand extends Backbone.Collection
 
   dealerPlay: () ->
     if @at(0).get('revealed') != true then @at(0).flip()
-
     while @scores()[0] < 17 and @scores()[1] < 17 then @hit()
 
   hasAce: -> @reduce (memo, card) ->

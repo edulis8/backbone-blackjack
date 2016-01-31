@@ -31,8 +31,23 @@ describe 'Hand', ->
       assert.strictEqual score0, playerHand.scores()[0]
       assert.strictEqual score1, playerHand.scores()[1]
       
-    it 'should trigger the dealer to play on "stand"', ->
+    it 'should trigger the dealer to play on "stand" (first card flipped)', ->
+      playerHand.stand()
+      setTimeout ->
+        assert.strictEqual dealerHand.at(0).get('revealed'), true
+      , 5
       
     it 'should make the dealer hit until they have a score >= 17', ->
+      i = 0
+      while i < 100
+        deck = new Deck()
+        dealerHand = deck.dealDealer()
+        dealerHand.dealerPlay()
+        test = dealerHand.scores()[0] >= 17 or dealerHand.scores()[1] >= 17
+        assert.strictEqual test, true
+        i++
       
+      
+
+
     

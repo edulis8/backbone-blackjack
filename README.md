@@ -1,6 +1,8 @@
 # Blackjack
 ===========
-A Backbone.js-based blackjack game, written in CoffeeScript
+A Backbone.js-based blackjack game, written in CoffeeScript.
+
+I completed this spring with a pair when I was a student at Hack Reactor Remote. 
 
 ## Installation
 
